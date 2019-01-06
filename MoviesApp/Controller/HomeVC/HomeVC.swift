@@ -4,40 +4,42 @@
 //
 //  Created by a7med on 1/4/19.
 //  Copyright © 2019 a7med. All rights reserved.
-//
+// greeb task
 
 import UIKit
 
 class HomeVC: UIViewController {
+    
+    lazy   var searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: ((self.navigationController?.navigationBar.frame.width ?? 0) / 1.5)  , height: 20))
+    lazy var favorite = UIBarButtonItem(image:#imageLiteral(resourceName: "favorite"), style: .plain, target: self, action: #selector(self.favoritePressed))
+    lazy var srch = UIBarButtonItem(image: #imageLiteral(resourceName: "search"), style: .plain, target: self, action: #selector(self.searchPressed))
     var dataSource : Home_Base?
- 
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var collection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(" date ==> ",APIManager.sharedInstance.returnDate())
-GetLatestMovies()
+        self.navigationItem.backBarButtonItem?.title = ""
+        searchBar.placeholder = "Search for a Movie "
+        let leftNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.rightBarButtonItems = [favorite,srch,leftNavBarButton]
+        GetLatestMovies()
         
         // Do any additional setup after loading the view.
     }
     
-    func GetLatestMovies() {
-       
-            APIManager.sharedInstance.getRequest("\(URLs.discover)&primary_release_date.lte=\(APIManager.sharedInstance.returnDate())") { (res) in
-                if res.error != nil{
-                    print(res.error?.localizedDescription)
-                }else{
-                    let decoder = JSONDecoder()
-                    do{
-                        let model = try decoder.decode(Home_Base.self, from: res.data!)
-                        self.dataSource = model
-                        print("session ID Model ==>>",model)
-                        
-                    }catch{
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-        
+  
+    @objc func searchPressed() {
+        GetSearchMovie(searchBar.text ?? "")
+    }
+    @objc func favoritePressed()  {
+        print("favbarPressed")
+    }
+    func FavoriteCellBtnPressed(_ cell: HomeCell) {
+        print("FavoriteBtnPressed")
+    }
+    func shareCellBtnPressed(_ cell: HomeCell) {
+        print("shareBtnPressed")
     }
     
     

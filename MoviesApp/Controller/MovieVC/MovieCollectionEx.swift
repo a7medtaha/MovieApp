@@ -8,23 +8,50 @@
 
 import UIKit
 
-class MovieEx: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+extension MovieVC: UICollectionViewDelegate,UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch collectionView.tag {
+        case 0:
+            return similarDatasource?.results?.count ?? 0
+        case 1:
+            return castDatasource?.cast?.count ?? 0
+        default:
+            return castDatasource?.crew?.count ?? 0
+        }
+        
+        
     }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomeCell
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        switch collectionView.tag {
+        case 0:
+          
+            let mt = similarDatasource?.results?[indexPath.row].original_title ?? ""
+            let img = URLs.imageUrl + (similarDatasource?.results?[indexPath.row].poster_path ?? "")
+            
+            cell.configureCell(MovieTitle: mt , MovieImage: img)
+        case 1:
+            let mt = castDatasource?.cast?[indexPath.row].name ?? ""
+            let img = URLs.imageUrl + (castDatasource?.cast?[indexPath.row].profile_path ?? "")
+            
+            cell.configureCell(MovieTitle: mt , MovieImage: img)
+           
+        default:
+            let mt = castDatasource?.crew?[indexPath.row].name ?? ""
+            let img = URLs.imageUrl + (castDatasource?.crew?[indexPath.row].profile_path ?? "")
+            
+            cell.configureCell(MovieTitle: mt , MovieImage: img)
+        }
+         return cell
     }
-    */
-
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width / 1.5) - 16
+        let height = (collectionView.frame.height) - 16
+        
+        return CGSize(width: width, height: height)
+    }
+    
+    
 }

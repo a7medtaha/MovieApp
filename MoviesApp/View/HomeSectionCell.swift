@@ -9,5 +9,6 @@
 import UIKit
 
 class HomeSectionCell: UICollectionReusableView {
-        
+    @IBOutlet weak var sectionTitle: UILabel!
+    
 }

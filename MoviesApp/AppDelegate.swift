@@ -44,24 +44,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-// 
-extension AppDelegate {
-    
-    func getGestSessionId() {
-        APIManager.sharedInstance.getRequest("\(URLs.guest_session)") { (res) in
-            if res.error != nil{
-                print(res.error?.localizedDescription)
-            }else{
-                let decoder = JSONDecoder()
-                do{
-                    let model = try decoder.decode(SessionID.self, from: res.data!)
-                    self.dataSource = model
-                    print("session ID Model ==>>",model)
-                    
-                }catch{
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-}

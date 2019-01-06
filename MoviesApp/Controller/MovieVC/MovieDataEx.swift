@@ -8,23 +8,104 @@
 
 import UIKit
 
-class MovieDataEx: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+extension MovieVC{
+    func setMovieData() {
+        let img = URLs.imageUrl + (datasource?.poster_path ?? "")
+        var genres = ""
+        for index in (datasource?.genres)!{
+            genres.append("\(index.name ?? ""),")
+        }
+        movieTitle.text = datasource?.original_title ?? ""
+        movieDescription.text = datasource?.overview ?? ""
+        moviegenres.text = genres
+        DispatchQueue.main.async {
+            self.movieImage.sd_setImage(with: URL(string: img), completed: nil)
+            
+        }
+        
+    }
+    func getMovie() {
+        spinner.startAnimating()
+        sview.isHidden = true
+        spinner.isHidden = false
+        
+        
+        APIManager.sharedInstance.getRequest("\(URLs.movie)\(movieId ?? 0)?api_key=\(APIManager.sharedInstance.api_key)") { (res) in
+            if res.error != nil{
+                SharedHandler.alertDialog(self, "Alert", res.error?.localizedDescription ?? "", BtnTitle: "Dismiss")
+            }else{
+                let decoder = JSONDecoder()
+                do{
+                    let model = try decoder.decode(Movie_Base.self, from: res.data!)
+                    self.datasource = model
+                    print(model)
+                    self.setMovieData()
+                }catch{
+                    SharedHandler.alertDialog(self, "Alert", error.localizedDescription, BtnTitle: "Dismiss")
+                }
+                self.spinner.stopAnimating()
+                self.sview.isHidden = false
+                self.spinner.isHidden = true
+                
+            }
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func getSimilarMovie() {
+        spinner.startAnimating()
+        sview.isHidden = true
+        spinner.isHidden = false
+        
+        
+        APIManager.sharedInstance.getRequest("\(URLs.movie)\(movieId ?? 0)/similar?api_key=\(APIManager.sharedInstance.api_key)") { (res) in
+            if res.error != nil{
+                SharedHandler.alertDialog(self, "Alert", res.error?.localizedDescription ?? "", BtnTitle: "Dismiss")
+            }else{
+                let decoder = JSONDecoder()
+                do{
+                    let model = try decoder.decode(Similar_Base.self, from: res.data!)
+                    self.similarDatasource = model
+                    print(model)
+                    self.collection.reloadData()
+                }catch{
+                    SharedHandler.alertDialog(self, "Alert", error.localizedDescription, BtnTitle: "Dismiss")
+                }
+                self.spinner.stopAnimating()
+                self.sview.isHidden = false
+                self.spinner.isHidden = true
+                
+            }
+        }
     }
-    */
+    
+    func getMovieCast() {
+        spinner.startAnimating()
+        sview.isHidden = true
+        spinner.isHidden = false
+        
+        
+        
+        APIManager.sharedInstance.getRequest("\(URLs.movie)\(movieId ?? 0)/credits?api_key=\(APIManager.sharedInstance.api_key)") { (res) in
+            if res.error != nil{
+                SharedHandler.alertDialog(self, "Alert", res.error?.localizedDescription ?? "", BtnTitle: "Dismiss")
+            }else{
+                let decoder = JSONDecoder()
+                do{
+                    let model = try decoder.decode(Cast_Base.self, from: res.data!)
+                    self.castDatasource = model
+                    print(model)
+                    self.castCollection.reloadData()
+                    self.crewCollection.reloadData()
+                }catch{
+                    SharedHandler.alertDialog(self, "Alert", error.localizedDescription, BtnTitle: "Dismiss")
+                }
+                self.spinner.stopAnimating()
+                self.sview.isHidden = false
+                self.spinner.isHidden = true
+                
+            }
+        }
+    }
+
 
 }
