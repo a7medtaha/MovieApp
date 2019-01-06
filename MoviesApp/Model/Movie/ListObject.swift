@@ -1,9 +1,14 @@
-//
-//  ListObject.swift
-//  MoviesApp
-//
-//  Created by a7med on 1/6/19.
-//  Copyright © 2019 a7med. All rights reserved.
-//
-
 import Foundation
+class ListObject{
+    var id : Int = 0
+    var image : String?
+    var title : String?
+    
+    init(id : Int,title: String ,image: String) {
+        self.id = id
+        self.image = image
+        self.title = title
+        
+    }
+}
+

@@ -11,5 +11,6 @@ pod 'SwiftyJSON'
 pod 'SDWebImage'
 pod 'NVActivityIndicatorView'
 pod 'IQKeyboardManagerSwift'
+pod 'SQLite.swift'
 
 end
