@@ -49,6 +49,15 @@ class MovieVC: UIViewController {
         movieTitle.layer.shadowRadius = 5
     }
     
+    @IBAction func addtoFavBtnPressed(_ sender: UIButton) {
+        if  SqlLiteManager.shared.insertItem(datasource?.id ?? 0, datasource?.original_title ?? "", datasource?.poster_path ?? ""){
+            SharedHandler.DissapearMessage(viewController: self, message: "Movie added to favorites.")
+        }else{
+           SharedHandler.DissapearMessage(viewController: self, message: "Already exist. ")
+        }
+        SqlLiteManager.shared.listitems()
+    }
+    
     
    
     

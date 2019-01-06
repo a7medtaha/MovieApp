@@ -13,51 +13,6 @@ import UIKit
 
 class SharedHandler{
     
-    static var sideButton : UIBarButtonItem!
-    
-    static func setSideImage()  {
-        let image = UIImage(named: "ic_menu-web")
-        
-        sideButton = UIBarButtonItem(image: image,  style: .plain , target: self, action: Selector(("didTapEditButton:")))
-    }
-  
-  
-   
-  
-    static func getUserID() -> Int{
-        let y = UserDefaults.standard.object(forKey: _ID) as? Int ?? 0
-        return y
-    }
-    static func getUserType() -> Int{
-        // false = jobSeeker , true = employer
-        let y = UserDefaults.standard.object(forKey: _Type) as? Int ?? 0
-        return y
-    }
-    
-  static func ByGrand(flag: Bool) {
-    let def = UserDefaults.standard
-        def.setValue(flag,forKey: "Grand")
-        def.synchronize()
-    }
-   
-    
-    static func createViewController( storyboardID : String ) -> UIViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: storyboardID )
-        return controller
-        
-    }
-   
-    
-    
-    
-    static  func roundCorners(_ lbl: UILabel,cornerRadius: Double) {
-        let path = UIBezierPath(roundedRect: lbl.bounds, byRoundingCorners: [.topLeft, .bottomLeft], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-        let maskLayer = CAShapeLayer()
-        maskLayer.frame = lbl.bounds
-        maskLayer.path = path.cgPath
-        lbl.layer.mask = maskLayer
-    }
     
     static func alertDialogawithSegue(_ sourceViewController: UIViewController,_ destinationViewController: UIViewController,_ title: String , _ message: String ,BtnTitle: String){
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
@@ -87,9 +42,6 @@ class SharedHandler{
         
     }
     
- 
-
-   
     
     static func DissapearMessage(viewController: UIViewController,message: String,myHandler: (() -> Swift.Void)? = nil)
     {
@@ -103,68 +55,6 @@ class SharedHandler{
             alert.dismiss(animated: true, completion: nil)
         }
     }
-    static func IsLogin() -> Bool{
-       
-        let y = UserDefaults.standard.object(forKey: _LoggedIn) as? Bool ?? false
-        return y
-    }
-    static func getUserName() -> String{
-        let y = UserDefaults.standard.object(forKey: _Name) as? String ?? ""
-        return y
-    }
-    static func getUserDefault(of userDeafult : String) -> String {
-        let y = UserDefaults.standard.object(forKey: userDeafult) as? String ?? ""
-        return y
-    }
-    
-    static func setUserDefault(_ Value : String, forKey : String)  {
-        UserDefaults.standard.set(Value, forKey: forKey)
-        UserDefaults.standard.synchronize()
-        
-    }
-    static func getUserMail() -> String{
-        let y = UserDefaults.standard.object(forKey: _Mail) as? String ?? ""
-        return y
-    }
-    static func getUserID() -> String{
-        let y = UserDefaults.standard.object(forKey: _ID) as? String ?? ""
-        return y
-    }
-    static func getUserPhone() -> String{
-        let y = UserDefaults.standard.object(forKey: _Phone) as? String ?? ""
-        return y
-    }
-    static func getUserImage() -> String{
-        let y = UserDefaults.standard.object(forKey: _IMAGE) as? String ?? ""
-        return y
-    }
-    static func getUserGender(_ number: String) -> String{
-        if number == "0"{
-            return "Male"
-            
-        }else if number == "1" {
-            return "Female"
-            
-        } else{
-            return "Both"
-        }
-        
-    }
-    static func logout(){
-//        UserDefaults.standard.set("", forKey: "firstname")
-//        UserDefaults.standard.set("", forKey: "lastname")
-        UserDefaults.standard.set("", forKey: _Name)
-    UserDefaults.standard.set("", forKey: _ID)
-        UserDefaults.standard.set("", forKey: _Type)
-    UserDefaults.standard.set("", forKey: _Gender)
-    UserDefaults.standard.set("", forKey: _Mail)
-    UserDefaults.standard.set(false, forKey: _LoggedIn)
-    UserDefaults.standard.set("", forKey: _Phone)
-//    UserDefaults.standard.set("", forKey: "birth_date")
-        UserDefaults.standard.set("", forKey: _IMAGE)
-//    UserDefaults.standard.set("", forKey: "password")
-    }
-    
     
     static func startSpinner (_ Spinner: UIActivityIndicatorView, _ View: UIView){
         Spinner.startAnimating()
@@ -175,7 +65,7 @@ class SharedHandler{
     static func stopSpinner (_ Spinner: UIActivityIndicatorView,_ View: UIView){
         Spinner.stopAnimating()
         Spinner.isHidden = true
-         View.isHidden = false
+        View.isHidden = false
         
     }
     static func alertDialog(_ viewController: UIViewController,_ title: String , _ message: String ,BtnTitle: String){
@@ -188,8 +78,8 @@ class SharedHandler{
         viewController.present(alert, animated: true, completion: nil)
         
     }
-  
-   
+    
+    
     
     
     static func alertDialogWithDismiss(_ viewController: UIViewController,_ title: String , _ message: String ,BtnTitle: String){
@@ -236,8 +126,8 @@ class SharedHandler{
         // this changed in Swift 3 (much better, no?)
         label.textAlignment = .center
         label.font = label.font.withSize(18)
-            label.text = "No Data."
-       
+        label.text = "No Data."
+        
         
         viewController.view.addSubview(label)
     }

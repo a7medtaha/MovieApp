@@ -38,7 +38,7 @@ extension HomeVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomeCell
         let mt = dataSource?.results?[indexPath.row].original_title ?? ""
         let img = URLs.imageUrl + (dataSource?.results?[indexPath.row].poster_path ?? "")
-        cell.delegate = self
+       
         cell.configureCell(MovieTitle: mt , MovieImage: img)
         return cell
     }
@@ -49,15 +49,14 @@ extension HomeVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollecti
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print("item\(indexPath.item)")
-        print("row\(indexPath.row)")
+        
         var itemCount = indexPath.item
         let arrayCount = dataSource?.results?.count ?? 0
         if itemCount == (arrayCount - 1) {
           
             
         }else{
-           print("No scrolling ")
+//           print("No scrolling ")
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

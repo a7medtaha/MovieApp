@@ -19,6 +19,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var collection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationItem.backBarButtonItem?.title = ""
         searchBar.placeholder = "Search for a Movie "
         let leftNavBarButton = UIBarButtonItem(customView:searchBar)
@@ -33,14 +34,10 @@ class HomeVC: UIViewController {
         GetSearchMovie(searchBar.text ?? "")
     }
     @objc func favoritePressed()  {
-        print("favbarPressed")
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyFavoritesVC") as! MyFavoritesVC
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    func FavoriteCellBtnPressed(_ cell: HomeCell) {
-        print("FavoriteBtnPressed")
-    }
-    func shareCellBtnPressed(_ cell: HomeCell) {
-        print("shareBtnPressed")
-    }
+    
     
     
 }

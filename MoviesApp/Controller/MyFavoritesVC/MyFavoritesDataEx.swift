@@ -9,5 +9,8 @@
 import UIKit
 
 extension MyFavoritesVC{
-    
+    func getData()  {
+      dataSource = SqlLiteManager.shared.listitems()
+        collection.reloadData()
+    }
 }

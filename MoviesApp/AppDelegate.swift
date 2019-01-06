@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import SQLite
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
 
-    var dataSource : SessionID?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        SqlLiteManager.shared.createFileAndConnection()
+        SqlLiteManager.shared.createTable()
+    
         return true
     }
 
@@ -42,5 +46,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
-
 

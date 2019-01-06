@@ -51,8 +51,9 @@ class APIManager {
     }
     
     
-    func postRequest(_ url : String ,Parameters : [String: Any]?,completionHandler :@escaping (DataResponse<Any>) -> Void) {
-        _ = Alamofire.request(url,method: .post, parameters: Parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+    func postRequest(_ url : String ,_ Header: [String: String]?,Parameters : [String: Any]?,completionHandler :@escaping (DataResponse<Any>) -> Void) {
+      
+        _ = Alamofire.request(url,method: .post, parameters: Parameters, encoding: JSONEncoding.default, headers: Header).responseJSON { response in
             completionHandler(response)
         }
     }

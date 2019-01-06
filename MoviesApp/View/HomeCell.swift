@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 class HomeCell: UICollectionViewCell {
-    weak var delegate: HomeVC?
+    weak var delegate: MyFavoritesVC?
     
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieImage: UIImageView!
@@ -35,11 +35,10 @@ class HomeCell: UICollectionViewCell {
        
         
     }
-    @IBAction func likeBtnPressed(_ sender: UIButton) {
-        delegate?.FavoriteCellBtnPressed(self)
+    
+    @IBAction func deleteBtnClicked(_ sender: UIButton) {
+        delegate?.deleteitem(self)
+        print("deleteClicked")
     }
     
-    @IBAction func ShareBtnPressed(_ sender: UIButton) {
-        delegate?.shareCellBtnPressed(self)
-    }
 }
