@@ -8,6 +8,7 @@
 
 import UIKit
 import SQLite
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         SqlLiteManager.shared.createFileAndConnection()
         SqlLiteManager.shared.createTable()
-    
+    IQKeyboardManager.shared.enable = true
         return true
     }
 
